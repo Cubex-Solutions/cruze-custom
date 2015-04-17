@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_employee_code_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.code.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//label[@for='name']" position="before">
+                    <label for="employee_code" class="oe_edit_only"/>
+                    <h1>
+                        <field name="employee_code"/>
+                    </h1>
+                </xpath>
+
+                <xpath expr="//field[@name='address_home_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_employee_code_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.code.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="employee_code" string="Code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_kanban_view_employees_code" model="ir.ui.view">
+            <field name="name">hr.employee.code.kanban</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//ul/li[1]" position="before">
+                    <li><span>Code: </span><field name="employee_code"/></li>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_employee_code_filter" model="ir.ui.view">
+            <field name="name">Employees</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="employee_code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>
