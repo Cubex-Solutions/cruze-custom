@@ -7,7 +7,7 @@
     'summary': """
     Simple Customization to fit a specific needs.
     """,
-    'depends': ['hr_holidays', ],
+    'depends': ['hr_holidays', 'hr_payroll', ],
     'data':['hr_employee_code_view.xml', ],
     'installable': True,
     'auto_install': False,

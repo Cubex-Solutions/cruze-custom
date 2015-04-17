@@ -43,7 +43,10 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//ul/li[1]" position="before">
-                    <li><span>Code: </span><field name="employee_code"/></li>
+                    <li>
+                        <span>Code:</span>
+                        <field name="employee_code"/>
+                    </li>
                 </xpath>
 
             </field>
@@ -74,7 +77,8 @@
                 </xpath>
 
                 <xpath expr="//field[@name='employee_id']" position="before">
-                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}"/>
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"
+                           attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}"/>
                 </xpath>
 
             </field>
@@ -97,6 +101,53 @@
             <field name="name">hr.holidays.emp.code.filter</field>
             <field name="model">hr.holidays</field>
             <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="employee_code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!--hr.payslip-->
+        <record id="edit_payslip_employee_code_new" model="ir.ui.view">
+            <field name="name">Payslip with Employee Code</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='employee_id']" position="before">
+                    <label for="employee_code" class="oe_edit_only"/>
+                    <h1>
+                        <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                    </h1>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_payslip_employee_code" model="ir.ui.view">
+            <field name="name">hr.payslip.employee.code.tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='number']" position="before">
+                    <field name="employee_code" string="Code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_hr_payslip_employee_code_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.emp.code.filter</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='name']" position="before">

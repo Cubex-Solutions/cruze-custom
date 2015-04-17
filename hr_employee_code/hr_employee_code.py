@@ -31,7 +31,6 @@ class hr_holidays(osv.Model):
     def onchange_employee_code(self, cr, uid, ids, employee_code, context):
         if employee_code:
             employee_id = self.pool.get('hr.employee').search(cr, uid, [('employee_code', '=', employee_code)], context=context)[0]
-            # employee_name = self.pool.get('hr.employee').browse(cr, uid, employee_id, context=context).name
             return {'value':
                         {'employee_id': employee_id}
                     }
@@ -43,3 +42,23 @@ class hr_holidays(osv.Model):
     _defaults = {
         'employee_code': _get_default_code,
     }
+
+
+class hr_payslip(osv.Model):
+    _name = 'hr.payslip'
+    _inherit = 'hr.payslip'
+
+    _columns = {
+        'employee_code': fields.integer(string="Employee Code", required=True, ),
+    }
+
+    def onchange_employee_code(self, cr, uid, ids, employee_code, context):
+        if employee_code:
+            employee_id = self.pool.get('hr.employee').search(cr, uid, [('employee_code', '=', employee_code)], context=context)[0]
+            return {'value':
+                        {'employee_id': employee_id}
+                    }
+        else:
+            return {'value':
+                        {'employee_id': False}
+                    }
