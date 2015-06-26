@@ -1,76 +1,93 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-	<record model="ir.ui.view" id="purchase_request_form">
-		<field name="name">Purchase Request Form</field>
-		<field name="model">purchase.request</field>
-		<field name="arch" type="xml">
-			<form string="Purchase Requests">
-				<group colspan="4">
-					<field name="name"/>
-					<field name="user_id"/>
-					<field name="create_date"/>
-					<field name="required_date"/>
-					<field name="priority"/>
-				</group>
-				<notebook>
-					<page string="Items">
-						<group>
-							<group string="Requested Items">
-								<field name="request_items" type="html"/>
-							</group>
-						</group>
-					</page>
-					<page string="Reasons">
-						<group>
-							<group string="Reasons">
-								<field name="request_reason"/>
-							</group>
-						</group>
-					</page>
-					<page string="Notes">
-						<group>
-							<group string="Notes">
-								<field name="notes"/>
-							</group>
-						</group>
-					</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+        <record model="ir.ui.view" id="purchase_request_form">
+            <field name="name">Purchase Request Form</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Requests">
+                    <sheet>
+                        <group colspan="4">
+                            <field name="id"/>
+                            <field name="name" string="Name"/>
+                            <field name="user_id"/>
+                            <field name="create_date"/>
+                            <field name="required_date"/>
+                            <field name="priority"/>
+                        </group>
+                        <notebook>
+                            <page string="Items">
+                                <group>
+                                    <group string="Requested Items">
+                                        <field name="request_items" type="html"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Reasons">
+                                <group>
+                                    <group string="Reasons">
+                                        <field name="request_reason"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Notes">
+                                <group>
+                                    <group string="Notes">
+                                        <field name="notes"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-	<record id="purchase_request_tree" model="ir.ui.view">
-		<field name="name">Purchase Request Tree</field>
-		<field name="model">purchase.request</field>
-		<field name="arch" type="xml">
-			<tree string="Purchase Requests">
-				<field name="name"/>
-				<field name="user_id"/>
-				<field name="required_date"/>
-				<field name="priority"/>
-				<field name="create_date"/>
-			</tree>
-		</field>
-	</record>
-		
-	<record id="purchase_requests" model="ir.actions.act_window">
-		<field name="name">Purchase Requests</field>
-		<field name="res_model">purchase.request</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="help" type="html">
-			<p class="oe_view_nocontent_create">
-				There are currently no purchase requests.
-			</p>
-		</field>
-	</record>
+        <record id="purchase_request_tree" model="ir.ui.view">
+            <field name="name">Purchase Request Tree</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Requests">
+                    <field name="id"/>
+                    <field name="name" string="Name"/>
+                    <field name="user_id"/>
+                    <field name="required_date"/>
+                    <field name="priority"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
 
-	<!-- Add Private Medical Insurance Menu Item -->
-	<menuitem name="Purchase Requests"
-		id="purchase_requests_menu"
-		parent="purchase.menu_procurement_management"
-		action="purchase_requests"/>
+        <record id="purchase_requests" model="ir.actions.act_window">
+            <field name="name">Purchase Requests</field>
+            <field name="res_model">purchase.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There are currently no purchase requests.
+                </p>
+            </field>
+        </record>
 
-	</data>
+        <!-- Add Private Medical Insurance Menu Item -->
+        <menuitem name="Purchase Requests"
+                  id="purchase_requests_menu"
+                  parent="purchase.menu_procurement_management"
+                  action="purchase_requests"/>
+
+        <record id="sequence_purchase_request_type" model="ir.sequence.type">
+            <field name="name">Purchase Request</field>
+            <field name="code">purchase.request</field>
+        </record>
+
+        <record id="sequence_purchase_request" model="ir.sequence">
+            <field name="name">Purchase Request</field>
+            <field name="code">purchase.request</field>
+            <field name="prefix">PR %(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
 </openerp>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_hr_insurance_form" model="ir.ui.view">
+            <field name="name">hr.employee.insurance.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="after">
+                    <group string="Private Insurance">
+                        <field name="insurance_grade"/>
+                        <field name="ssnid"/>
+                        <field name="ssn_date"/>
+                        <field name="ssn_file"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_insurance_tree" model="ir.ui.view">
+            <field name="name">hr.employee.insurance.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Private Insurace">
+                    <field name="employee_code"/>
+                    <field name="name"/>
+                    <field name="birthday"/>
+                    <field name="initial_employment_date"/>
+                    <field name="marital"/>
+                    <field name="insurance_grade"/>
+                    <field name="gov_insurance"/>
+                    <field name="ssnid"/>
+                    <field name="ssn_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_insurance_filter" model="ir.ui.view">
+            <field name="name">hr.employee.insurance.filter</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="ssnid"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_hr_insurance" model="ir.actions.act_window">
+            <field name="name">Private Insurance</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_insurance_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There are no employees in the system.
+                </p>
+            </field>
+        </record>
+
+    <menuitem
+        sequence="10"
+        parent="hr.menu_hr_main"
+        id="menu_action_hr_insurance"
+        action="action_hr_insurance"/>
+    </data>
+</openerp>

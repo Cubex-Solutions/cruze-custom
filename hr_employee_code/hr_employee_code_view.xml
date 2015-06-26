@@ -66,7 +66,7 @@
         </record>
 
         <!--hr.holidays-->
-        <record id="edit_holiday_employee_code_new" model="ir.ui.view">
+        <!--<record id="edit_holiday_employee_code_new" model="ir.ui.view">
             <field name="name">Leave Request with Employee Code</field>
             <field name="model">hr.holidays</field>
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
@@ -82,7 +82,7 @@
                 </xpath>
 
             </field>
-        </record>
+        </record>-->
 
         <record id="view_holiday_employee_code" model="ir.ui.view">
             <field name="name">hr.holidays.employee.code.tree</field>
@@ -110,8 +110,40 @@
             </field>
         </record>
 
+        <!--hr.holidays.extension-->
+        <record id="edit_holiday_employee_code_ext" model="ir.ui.view">
+            <field name="name">Extended Leave Request with Employee Code</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays_extension.view_leave_request_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"
+                           attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_holiday_ext_employee_code" model="ir.ui.view">
+            <field name="name">hr.holidays.ext.employee.code.tree</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday_simple"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" string="Code"/>
+                </xpath>
+
+            </field>
+        </record>
+
         <!--hr.contract-->
-        <record id="edit_holiday_employee_code_new" model="ir.ui.view">
+        <record id="edit_contract_employee_code_new" model="ir.ui.view">
             <field name="name">Contract with Employee Code</field>
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
@@ -128,7 +160,7 @@
             </field>
         </record>
 
-        <record id="view_holiday_employee_code" model="ir.ui.view">
+        <record id="view_contract_employee_code" model="ir.ui.view">
             <field name="name">hr.contract.employee.code.tree</field>
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
@@ -141,7 +173,7 @@
             </field>
         </record>
 
-        <record id="view_hr_holidays_employee_code_filter" model="ir.ui.view">
+        <record id="view_hr_contract_employee_code_filter" model="ir.ui.view">
             <field name="name">hr.contract.emp.code.filter</field>
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_search"/>
@@ -200,6 +232,305 @@
                     <field name="employee_code"/>
                 </xpath>
 
+            </field>
+        </record>
+
+        <!--hr.schedule-->
+        <record id="view_hr_schedule_employee_code_tree" model="ir.ui.view">
+            <field name="name">hr.schedule.employee.code.tree</field>
+            <field name="model">hr.schedule</field>
+            <field name="inherit_id" ref="hr_schedule.view_hr_schedule_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_employee_code_form" model="ir.ui.view">
+            <field name="name">hr.schedule.employee.code.form</field>
+            <field name="model">hr.schedule</field>
+            <field name="inherit_id" ref="hr_schedule.view_hr_schedule_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_employee_code_filter" model="ir.ui.view">
+            <field name="name">hr.schedule.employee.code.filter</field>
+            <field name="model">hr.schedule</field>
+            <field name="inherit_id" ref="hr_schedule.view_hr_schedule_filter"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <!-- HR Schedule Detail -->
+        <record id="view_hr_schedule_detail_empcode_filter" model="ir.ui.view">
+            <field name="name">hr.schedule.detail.employee.code.filter</field>
+            <field name="model">hr.schedule.detail</field>
+            <field name="inherit_id" ref="hr_schedule.view_hr_schedule_detail_filter"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_detail_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.schedule.detail.employee.code.tree</field>
+            <field name="model">hr.schedule.detail</field>
+            <field name="inherit_id" ref="hr_schedule.view_schedule_detail_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <!-- HR Schedule Change Request -->
+        <record id="view_hr_schedule_request_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.schedule.request.employee.code.tree</field>
+            <field name="model">hr.schedule.request</field>
+            <field name="inherit_id" ref="hr_schedule.view_request_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_request_empcode_form" model="ir.ui.view">
+            <field name="name">hr.schedule.request.employee.code.form</field>
+            <field name="model">hr.schedule.request</field>
+            <field name="inherit_id" ref="hr_schedule.view_request_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Schedule with Attendance Exceptions -->
+        <record id="view_hr_alert_empcode_filter" model="ir.ui.view">
+            <field name="name">hr.alert.employee.code.filter</field>
+            <field name="model">hr.schedule.alert</field>
+            <field name="inherit_id" ref="hr_schedule.view_alert_filter"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_alert_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.alert.employee.code.tree</field>
+            <field name="model">hr.schedule.alert</field>
+            <field name="inherit_id" ref="hr_schedule.view_alert_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_alert_empcode_form" model="ir.ui.view">
+            <field name="name">hr.alert.employee.code.form</field>
+            <field name="model">hr.schedule.alert</field>
+            <field name="inherit_id" ref="hr_schedule.view_alert_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- HR Scheduled OT -->
+        <record id="view_hr_schedule_ot_empcode_filter" model="ir.ui.view">
+            <field name="name">hr.schedule.ot.employee.code.filter</field>
+            <field name="model">hr.schedule.ot</field>
+            <field name="inherit_id" ref="hr_schedule.view_hr_schedule_ot_filter"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_ot_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.schedule.ot.employee.code.tree</field>
+            <field name="model">hr.schedule.ot</field>
+            <field name="inherit_id" ref="hr_schedule.view_schedule_ot_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_schedule_ot_empcode_form" model="ir.ui.view">
+            <field name="name">hr.schedule.ot.employee.code.form</field>
+            <field name="model">hr.schedule.ot</field>
+            <field name="inherit_id" ref="hr_schedule.view_schedule_ot_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- HR Attendance -->
+        <record id="view_hr_attendance_empcode_form" model="ir.ui.view">
+            <field name="name">hr.attendance.employee.code.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_hr_attendance_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.employee.code.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_who"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <!-- Infractions -->
+        <record id="hr_infraction_empcode_form" model="ir.ui.view">
+            <field name="name">hr.infraction.employee.code.form</field>
+            <field name="model">hr.infraction</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_infraction_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.infraction.employee.code.tree</field>
+            <field name="model">hr.infraction</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="hr_infraction_empcode_filter" model="ir.ui.view">
+            <field name="name">hr.infraction.employee.code.filter</field>
+            <field name="model">hr.infraction</field>
+            <field name="inherit_id" ref="hr_infraction.view_hr_infraction_filter"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <!-- Infraction Warnings -->
+        <record id="hr_infraction_warning_empcode_form" model="ir.ui.view">
+            <field name="name">hr.warning.employee.code.form</field>
+            <field name="model">hr.infraction.warning</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_warning_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_infraction_warning_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.warning.employee.code.tree</field>
+            <field name="model">hr.infraction.warning</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_warning_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <!-- Infraction Actions -->
+        <record id="hr_infraction_action_empcode_form" model="ir.ui.view">
+            <field name="name">hr.infraction.action.employee.code.form</field>
+            <field name="model">hr.infraction.action</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_action_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="employee_code" on_change="onchange_employee_code(employee_code, context)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_infraction_action_empcode_tree" model="ir.ui.view">
+            <field name="name">hr.infraction.action.employee.code.tree</field>
+            <field name="model">hr.infraction.action</field>
+            <field name="inherit_id" ref="hr_infraction.hr_infraction_action_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='employee_id']" position="before">
+                        <field name="employee_code"/>
+                    </xpath>
             </field>
         </record>
 

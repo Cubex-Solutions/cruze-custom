@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="partner_no_account">
+            <field name="name">Partner No Account</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_account_receivable']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+                <xpath expr="//field[@name='property_account_payable']" position="attributes">
+                    <attribute name="required">False</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

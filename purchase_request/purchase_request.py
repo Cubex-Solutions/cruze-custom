@@ -26,32 +26,33 @@ class purchase_request(osv.osv):
     _name = 'purchase.request'
     _description = 'Purchase Request'
     _columns = {
-    	'name': fields.char('PR Number', required=True, translate=True),
-    	'user_id': fields.many2one('res.users', string="Requested By", required=True, ondelete="cascade"),
-    	'create_date': fields.datetime('Created', readonly=True),
-    	'create_uid': fields.many2one('res.users', string='Creator', readonly=True),
-    	'request_items': fields.text(string='Requested Items', required=True),
-    	'request_reason': fields.text(string='Request Reason', required=True),
-    	'required_date': fields.datetime('Required Date'),
-    	'notes': fields.text(string='Notes'),
-    	'priority': fields.selection([('low','Low'),
-			('medium','Medium'),
-			('high','High'),
-			('urgent','Urgent')],
-			string='Priority'),
-	'state':fields.selection([
-		('new','New'),
-		('confirmed','Confirmed'),
-		('refused','Refused'),
-		('canceled','Canceled')
-		],
-		string='State',)
-    	}
-_defaults = {
-		'user_id': lambda obj, cr, uid, context: uid,
-		'required_date': fields.datetime.now,
-		}
-_sql_constraints = [
+        'name': fields.char('Name', required=True,),
+        'user_id': fields.many2one('res.users', string="Requested By", required=True, ondelete="cascade"),
+        'create_date': fields.datetime('Created', readonly=True),
+        'create_uid': fields.many2one('res.users', string='Creator', readonly=True),
+        'request_items': fields.text(string='Requested Items', required=True),
+        'request_reason': fields.text(string='Request Reason', required=True),
+        'required_date': fields.datetime('Required Date'),
+        'notes': fields.text(string='Notes'),
+        'priority': fields.selection([('low','Low'),
+            ('medium','Medium'),
+            ('high','High'),
+            ('urgent','Urgent')],
+            string='Priority'),
+        'state':fields.selection([
+            ('new','New'),
+            ('confirmed','Confirmed'),
+            ('refused','Refused'),
+            ('canceled','Canceled')
+            ],
+            string='State',)
+        }
+    _defaults = {
+        'user_id': lambda obj, cr, uid, context: uid,
+        'required_date': fields.datetime.now,
+        'name': lambda self, cr, uid, context: self.pool['ir.sequence'].get(cr, uid, 'purchase.request', context=context) or '/',
+        }
+    _sql_constraints = [
         ('name_uniq', 'unique(name, company_id)', 'Order Reference must be unique per Company!'),
     ]
 purchase_request()
